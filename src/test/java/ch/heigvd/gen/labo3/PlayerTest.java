@@ -17,7 +17,7 @@ class PlayerTest {
     }
 
     @BeforeAll
-    static void each() {
+    static void setup() {
         board = new Board();
         cup = new Cup();
         cup.addDie(new Die());
@@ -53,6 +53,13 @@ class PlayerTest {
 
         assertTrue(oldLoc < newLoc);
 
+    }
+
+    @Test
+    void shouldThrowAnExceptionIfnetWorthInNegatif () {
+        assertThrows(RuntimeException.class, () -> {
+            player.reduceCash(player.getNetWorth() + 1);
+        });
     }
 
     @Test

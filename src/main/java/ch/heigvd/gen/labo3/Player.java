@@ -32,14 +32,17 @@ public class Player {
     }
 
     public void reduceCash(Integer sum) {
+        if(netWorth < sum)
+            throw new RuntimeException("Impossible to have a negative netWorth");
+
         netWorth -= sum;
     }
 
     public void takeTurn(){
         cup.roll();
 
-        Square oldLoc = piece.getLocation();
-        Square newLoc = board.getSquare(oldLoc, cup.getTotal());
-        piece.setLocation(newLoc);
+        piece.setLocation(board.getSquare(piece.getLocation(), cup.getTotal()));
+
+        piece.getLocation().landedOn(this);
     }
 }
